@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect } from "react";
 
 export type InputProps = {
   label: string;
@@ -7,6 +7,7 @@ export type InputProps = {
   value: string;
   placeholder: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+	referecia?: React.RefObject<HTMLInputElement>;
 };
 export default function Input({
   label,
@@ -15,22 +16,26 @@ export default function Input({
   value,
   onChange,
   placeholder,
+	referecia,
 }: InputProps) {
-  const [inputValue, setInputValue] = useState(value);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
     if (onChange) onChange(e);
   };
+	useEffect(() => {
+		console.log(value);
+	}, [value]);
   return (
     <div className='flex flex-col w-full'>
       <label htmlFor={name}>{label}</label>
       <input
+				ref={referecia}
         type={type}
         name={name}
-        value={inputValue}
+        defaultValue={value}
         onChange={handleChange}
-        className='p-2 border border-gray-300 rounded-md'
+        className='w-auto p-2 break-words border border-gray-300 rounded-md h-fit'
         placeholder={placeholder}
+				required={true}
       />
     </div>
   );
