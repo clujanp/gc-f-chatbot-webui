@@ -1,6 +1,5 @@
 import { Route, Switch } from 'wouter';
 import Landing from './pages/landing';
-import FourOhFour from './pages/404';
 import Chatbox from './pages/chatbox';
 
 function App() {
@@ -14,7 +13,7 @@ function App() {
 
       {/* Default route in a switch */}
       <Route>
-        <FourOhFour />
+        <Landing />
       </Route>
     </Switch>
   );
