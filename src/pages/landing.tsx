@@ -48,16 +48,13 @@ export default function Landing() {
       </header>
       <Main>
         <h1 className='mt-8 text-4xl font-bold text-center text-gray-800'>
-          Bienvenido a nuestro banco
+          Bienvenido a CliSol
         </h1>
         <div className='flex flex-col items-center w-full'>
-          <p>Centro de Atención al Cliente Bancario</p>
-          <p>¿Tienes alguna queja o pregunta? ¡Estamos aquí para ayudarte!</p>
+          <p>El asistente virtual que te ayudará a gestionar las PQR de tus clientes.</p>
+          <p>¿Prueba a escribir algo en el chat?</p>
         </div>
         <section className='flex flex-col items-center w-full'>
-          <h3 className='mt-8 text-2xl font-bold text-center text-gray-800'>
-            Indicanos tu pregunta o queja
-          </h3>
           <Form
             inputs={[
               {
@@ -82,10 +79,16 @@ export default function Landing() {
                 placeholder: 'Escribe tu mensaje',
               },
             ]}
-            button={{
-              label: 'Enviar',
-              type: 'submit',
-            }}
+            buttons={
+							[
+								{
+									label: 'Enviar',
+									type: 'submit',
+									variant: 'primary',
+									fit: true,
+								},
+							]
+						}
             onSubmit={handleSubmit}
           />
         </section>
