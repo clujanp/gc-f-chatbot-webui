@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 export type InputProps = {
   label: string;
   type: string;
@@ -21,9 +19,6 @@ export default function Input({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) onChange(e);
   };
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
   return (
     <div className='flex flex-col w-full'>
       <label htmlFor={name}>{label}</label>
