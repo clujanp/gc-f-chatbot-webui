@@ -3,11 +3,6 @@ import Form from '../components/form';
 import Main from '../components/main';
 import { userStore } from '../store/user.store';
 
-type userData = {
-  name: string;
-  email: string;
-  message: string;
-};
 
 export default function Landing() {
   const { addUser, addId, addMessage, user, reset } = userStore();
@@ -15,18 +10,16 @@ export default function Landing() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data: userData = {
-      name: e.currentTarget.name.value,
-      email: e.currentTarget.email.value,
-      message: e.currentTarget.message.value,
-    };
-    if (user.email !== data.email) {
-      addUser(data.name, data.email);
+		const email = e.currentTarget.email.value;
+		const name = e.currentTarget.nombre.value;
+		const message = e.currentTarget.message.value;
+    if (user.email !== email) {
+      addUser(name, email);
       const uuid = Math.random().toString(36).substring(7);
       addId(uuid);
       reset();
     }
-    addMessage(data.message, 'user');
+    addMessage(message, 'user');
     setLocation('/chat');
   };
   return (
@@ -63,7 +56,7 @@ export default function Landing() {
               {
                 label: 'Nombre',
                 type: 'text',
-                name: 'name',
+                name: 'nombre',
                 value: '',
                 placeholder: 'Escribe tu nombre',
               },
