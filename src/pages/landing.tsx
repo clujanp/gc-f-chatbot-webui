@@ -51,7 +51,10 @@ export default function Landing() {
           Bienvenido a CliSol
         </h1>
         <div className='flex flex-col items-center w-full'>
-          <p>El asistente virtual que te ayudará a gestionar las PQR de tus clientes.</p>
+          <p>
+            El asistente virtual que te ayudará a gestionar las PQR de tus
+            clientes.
+          </p>
           <p>¿Prueba a escribir algo en el chat?</p>
         </div>
         <section className='flex flex-col items-center w-full'>
@@ -79,16 +82,14 @@ export default function Landing() {
                 placeholder: 'Escribe tu mensaje',
               },
             ]}
-            buttons={
-							[
-								{
-									label: 'Enviar',
-									type: 'submit',
-									variant: 'primary',
-									fit: true,
-								},
-							]
-						}
+            buttons={[
+              {
+                label: 'Enviar',
+                type: 'submit',
+                variant: 'primary',
+                fit: true,
+              },
+            ]}
             onSubmit={handleSubmit}
           />
         </section>

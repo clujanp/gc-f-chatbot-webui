@@ -14,7 +14,7 @@ type Store = {
   messages: Message[];
   addMessage: (message: string, agent: Agent) => void;
   reset: () => void;
-	clearStore: () => void;
+  clearStore: () => void;
 };
 
 export const userStore = create<Store>()(
@@ -30,7 +30,8 @@ export const userStore = create<Store>()(
           messages: [...state.messages, { agent: agent, text: message }],
         })),
       reset: () => set({ messages: [] }),
-			clearStore: () => set({ user: { name: '', email: '' }, messages: [], id: ''})
+      clearStore: () =>
+        set({ user: { name: '', email: '' }, messages: [], id: '' }),
     }),
     {
       name: 'user-storage', // unique name
