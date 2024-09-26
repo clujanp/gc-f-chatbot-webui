@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 
 export default defineConfig({
-  base: '/gc-f-chatbot-webui/',
+  // base: '/gc-f-chatbot-webui/',
   plugins: [react()],
   build: {
     outDir: 'dist',

@@ -6,6 +6,7 @@ import Form from '../components/form';
 import { useEffect, useRef, useState } from 'react';
 import Button from '../components/button';
 import Modal from '../components/modal';
+import { sendMessage } from '../services/sendMessage';
 
 export default function Chatbox() {
   const emailChatBot = 'chatBot@gcf.com';
@@ -31,23 +32,42 @@ export default function Chatbox() {
   const [currentMessage, setCurrentMessage] = useState('');
   const [textLoading, setTextLoading] = useState('.');
   const [, setLocation] = useLocation();
-  const { user, id, messages, addMessage, reset, clearStore, addId } =
+  const { user, id, messages, addMessage, reset, clearStore, addId, setProduct, product, setFeel, feel } =
     userStore();
   if (id === '') setLocation('/');
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     const message = e.currentTarget.message.value;
     addMessage(message, 'user');
-    setCurrentMessage('');
+		setState('loading');
+		sendMessage(id, message)
+			.then((data) => {
+				const response = data.response;
+				const product = data.product;
+				// "feels": {
+				// 	"enojo": 60,
+				// 	"felicidad": 0,
+				// 	"frustracion": 80,
+				// 	"tristeza": 40
+				// },
+				const feels = data.feels;
+				const feelDeMayorValor = Object.entries(feels).reduce((acc, curr) => {
+					if (curr[1] > acc.value) {
+						return { label: curr[0], value: curr[1] };
+					} else {
+						return acc;
+					}
+				}, { label: '', value: -Infinity });
+				setFeel(feelDeMayorValor.label, feelDeMayorValor.value);
+				addMessage(response, 'bot');
+				setProduct(product);
+				setCurrentMessage('');
+				setState('success');
+			});
     if (inputRef.current) {
       const input = inputRef.current as HTMLInputElement;
       input.value = '';
       input.focus();
     }
-    setState('loading');
-    setTimeout(() => {
-      setState('idle');
-      addMessage('Estoy procesando tu mensaje...', 'bot');
-    }, 8000);
   };
   useEffect(() => {
     if (mainRef.current) {
@@ -136,6 +156,13 @@ export default function Chatbox() {
               </span>
             </div>
           </header>
+						<span>
+							{product === '' ? '' : 'El producto detectado es:'} {product}
+						</span>
+						<span>
+							{feel.label === '' ? '' : 'El sentimiento detectado es:'} {feel.label}
+							{feel.label === '' ? '' : ` con un valor de ${feel.value}`}
+						</span>
           <main
             ref={mainRef}
             className='flex flex-col gap-2 p-2 overflow-y-auto'
@@ -212,12 +239,13 @@ function MessageLabel({ message, type, email, name }: MessageLabelProps) {
     >
       <Avatar alt={name} email={email} size='small' />
       <p
-        className='w-10/12 p-2 text-white break-words bg-blue-500 border border-gray-300 rounded-md'
+        className='p-2 text-white break-words bg-blue-500 border border-gray-300 rounded-md w-fit'
         style={{
           backgroundColor:
             type === 'user'
               ? 'rgba(59, 130, 246, 0.8)'
               : 'rgba(16, 185, 129, 0.8)',
+					textAlign: type === 'user' ? 'right' : 'left',
         }}
       >
         {message}
